@@ -5,7 +5,7 @@ import Spinner from '@/components/Spinner'
 import Container from '@/components/Container'
 import VideoFilterContainer from './components/VideoFilter'
 import CourseVideoRow from './components/CourseVideoRow'
-import { Video } from './types'
+import { Video } from '@/modules/shared/types'
 
 export interface CoursePageProps {
   title: string
@@ -14,17 +14,12 @@ export interface CoursePageProps {
   playlistVideos: Video[]
 }
 
-class CoursePage extends React.PureComponent<CoursePageProps> {
+class CoursePage extends React.Component<CoursePageProps> {
   listRef = React.createRef<List>()
-
 
   getItemSize = (index: number) => {
     const { playlistVideos } = this.props
     return playlistVideos[index].open === true ? 540 : 140
-  }
-
-  toggleOpenCallback = (index: number) => {
-    this.listRef.current?.resetAfterIndex(index)
   }
 
   render() {
@@ -47,13 +42,14 @@ class CoursePage extends React.PureComponent<CoursePageProps> {
                       itemCount={playlistVideos.length}
                       itemSize={this.getItemSize}
                       width={width}
+                      estimatedItemSize={140}
                     >
                       {({ index, style }) => (
                         <CourseVideoRow
                           index={index}
                           style={style}
                           video={playlistVideos[index]}
-                          toggleOpenCallback={this.toggleOpenCallback}
+                          toggleOpenCallback={() => this.listRef.current?.resetAfterIndex(index, true)}
                         />
                       )}
                     </List>

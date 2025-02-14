@@ -3,11 +3,12 @@ import styles from './VideoPlayer.module.scss'
 
 type VideoPlayerProps = {
   url: string;
+  onCompleted: () => void;
 };
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, onCompleted }) => {
   return <div className={styles['video-player']}>
-    <ReactPlayer url={url} controls width='100%' height="100%" />
+    <ReactPlayer url={url} controls width='100%' height="100%" onEnded={onCompleted} />
     </div>;
 };
 

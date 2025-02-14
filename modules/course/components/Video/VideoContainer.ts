@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import Video, { VideoProps } from './Video'
-import { Video as VideoType } from '../../types'
+import { Video as VideoType } from '@/modules/shared/types'
 import { isCompletedSelector, isOpenSelector } from '../../selectors'
-import { toggleVideoCompleted, toggleVideoOpen } from '../../slice'
+import { toggleVideoCompleted, toggleVideoOpen, setVideoCompleted } from '../../slice'
 
 interface ContainerProps {
   index: number
@@ -11,7 +11,7 @@ interface ContainerProps {
   video: VideoType
 }
 
-const withCompleted = connect(
+const withToggleCompleted = connect(
   (state, { video }: ContainerProps) => ({
     isCompleted: isCompletedSelector(state, video.id),
   }),
@@ -23,13 +23,24 @@ const withCompleted = connect(
   })
 )
 
+const withCompleted = connect(
+  (state, { video }: ContainerProps) => ({
+    isCompleted: isCompletedSelector(state, video.id),
+  }),
+  (dispatch, { video, toggleOpenCallback, index }: ContainerProps) => ({    
+    setCompleted: () => {
+      dispatch(setVideoCompleted({ id: video.id }))
+      toggleOpenCallback(index)
+    },
+  })
+)
+
 const withOpen = connect(
   (state, { video }: ContainerProps) => ({
     isOpen: isOpenSelector(state, video.id),
   }),
   (dispatch, { video, toggleOpenCallback, index }: ContainerProps) => ({
     toggleOpen: () => {
-      console.log('Toggle video:', video.id)
       dispatch(toggleVideoOpen({ id: video.id }))
       toggleOpenCallback(index)
     },
@@ -37,6 +48,7 @@ const withOpen = connect(
 )
 
 export default compose<VideoProps, ContainerProps>(
+  withToggleCompleted,
   withCompleted,
   withOpen
 )(Video)

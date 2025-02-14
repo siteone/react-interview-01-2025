@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Video } from './types'
+import { Video, FilterValue } from '@/modules/shared/types'
 
-export interface CoursePageState {
+export interface CoursePageState{
   loading: boolean;
   error: boolean;
   playlistVideos: Video[];
   title: string;
-  filterValue: 'all' | 'completed' | 'not-completed';
+  filterValue: FilterValue;
 }
 
 export const initialState: CoursePageState = {
@@ -38,25 +38,37 @@ const playlistSlice = createSlice({
     },
     toggleVideoCompleted: (state, action: PayloadAction<{ id: string }>) => {
       const { id } = action.payload
-      state.playlistVideos = state.playlistVideos.map(video => {
+      state.playlistVideos = [...state.playlistVideos.map(video => {
         if (video.id === id) {
           return { ...video, completed: !video.completed }
         }
         return video
-      })
+      })]
+    },
+    setVideoCompleted: (state, action: PayloadAction<{ id: string }>) => {
+      const { id } = action.payload
+      state.playlistVideos = [...state.playlistVideos.map(video => {
+        if (video.id === id) {
+          return { ...video, completed: true }
+        }
+        return video
+      })]
     },
     toggleVideoOpen: (state, action: PayloadAction<{ id: string }>) => {
       const { id } = action.payload
-      state.playlistVideos = state.playlistVideos.map(video => {
+      state.playlistVideos = [...state.playlistVideos.map(video => {
         if (video.id === id) {
           return { ...video, open: !video.open }
         }
         return video
-      })
+      })]
     },
     setVideoFilter: (state, action: PayloadAction<{ filterValue: CoursePageState['filterValue'] }>) => {
-      const { filterValue } = action.payload
-      state.filterValue = filterValue
+      state.filterValue = action.payload.filterValue
+      state.playlistVideos = [...state.playlistVideos.map(video => ({
+        ...video,
+        open: false
+      }))]
     },
   },
 })
@@ -68,6 +80,7 @@ export const {
   toggleVideoCompleted,
   toggleVideoOpen,
   setVideoFilter,
+  setVideoCompleted,
 } = playlistSlice.actions
 
 export default playlistSlice.reducer

@@ -1,6 +1,6 @@
 import React from 'react';
 import VideoContainer from './Video/VideoContainer';
-import { Video } from '../types';
+import { Video } from '@/modules/shared/types';
 
 interface CourseVideoRowProps {
   index: number;

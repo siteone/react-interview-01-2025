@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { compose, withProps } from 'recompose'
 import { videoFilterSelector } from '../../selectors.js'
 import { setVideoFilter } from '../../slice'
+import { FilterValue } from '@/modules/shared/types'
 
 type FilterProps = {
   filters: Array<{
@@ -14,7 +15,7 @@ type FilterProps = {
 
 type FilterContainerProps = {
   videoFilter: string;
-  setVideoFilter: (value: { filterValue: 'all' | 'completed' | 'not-completed' }) => void;
+  setVideoFilter: (value: { filterValue: FilterValue }) => void;
 }
 
 const withFilterState = connect(
@@ -22,7 +23,7 @@ const withFilterState = connect(
     videoFilter: videoFilterSelector(state),
   }),
   dispatch => ({
-    setVideoFilter: (filterValue: { filterValue: 'all' | 'completed' | 'not-completed' }) => {
+    setVideoFilter: (filterValue: { filterValue: FilterValue }) => {
       dispatch(setVideoFilter(filterValue))
     },
   }),

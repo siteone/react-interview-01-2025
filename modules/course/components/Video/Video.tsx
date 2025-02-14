@@ -2,11 +2,12 @@ import { memo } from 'react'
 import Collapse from '@/components/Collapse'
 import styles from './Video.module.scss'
 import VideoPlayer from '../VideoPlayer/VideoPlayer'
-import { Video as VideoType } from '../../types'
+import { Video as VideoType } from '@/modules/shared/types'
 
 export interface VideoProps {
   video: VideoType;
   toggleCompleted: () => void;
+  setCompleted: () => void;
   isCompleted: boolean;
   toggleOpen: () => void;
   isOpen: boolean;
@@ -16,6 +17,7 @@ export interface VideoProps {
 const Video: React.FC<VideoProps> = ({
   video,
   toggleCompleted,
+  setCompleted,
   isCompleted,
   toggleOpen,
   isOpen,
@@ -36,7 +38,7 @@ const Video: React.FC<VideoProps> = ({
             <h2 className={styles['video__title']}>{video.title}</h2>
             {isOpen && (
               <Collapse open={isOpen}>
-                <VideoPlayer url={`https://www.youtube.com/watch?v=${video.id}`} />
+                <VideoPlayer url={`https://www.youtube.com/watch?v=${video.id}`} onCompleted={setCompleted} />
                 <p className={styles['video__description']}>{video.description}</p>
               </Collapse>
             )}
