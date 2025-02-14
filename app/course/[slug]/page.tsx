@@ -10,6 +10,8 @@ const playlistIds = {
   "fk-2024-f": "PLnXfazh66kVc8TRx1qmK3wshWs330_xsK",
 };
 
-export default function Course({ params: { slug } }) {
+
+
+export default function Course({ params: { slug } }: { params: { slug: keyof typeof playlistIds } }) {
   return <CoursePageContainer playlistId={playlistIds[slug]} />;
 }

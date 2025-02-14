@@ -1,5 +1,5 @@
 import { put, takeLatest } from 'redux-saga/effects'
-import { fetchPlaylistError, fetchPlaylistSuccess, FETCH_PLAYLIST_REQUEST } from './actions'
+import { fetchPlaylistError, fetchPlaylistSuccess, fetchPlaylistRequest } from './slice'
 import ApiService from '@/services/ApiService'
 
 export function* fetchPlaylistSaga(action) {
@@ -16,5 +16,5 @@ export function* fetchPlaylistSaga(action) {
 }
 
 export default function* playlistData() {
-  yield takeLatest(FETCH_PLAYLIST_REQUEST, fetchPlaylistSaga)
+  yield takeLatest(fetchPlaylistRequest, fetchPlaylistSaga)
 }

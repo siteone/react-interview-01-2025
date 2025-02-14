@@ -30,6 +30,8 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/react-window": "^1.8.8",
+    "@types/recompose": "^0.30.15",
     "eslint": "^9",
     "eslint-config-next": "15.1.4",
     "typescript": "^5"
