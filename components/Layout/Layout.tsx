@@ -1,13 +1,17 @@
 import React from "react";
-import Header from "@/components/Header";
+import HeaderContainer from "../Header/HeaderContainer";
 import Footer from "@/components/Footer";
 import Container from "@/components/Container";
 import styles from "./Layout.module.scss";
 
-const Layout = ({ children }) => {
+interface LayoutProps {
+  children: React.ReactNode;
+}
+
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <>
-      <Header />
+      <HeaderContainer />
       <div className={styles["layout__content"]}>
         <Container>{children}</Container>
       </div>

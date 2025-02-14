@@ -22,6 +22,18 @@ class CoursePage extends React.Component<CoursePageProps> {
     return playlistVideos[index].open === true ? 540 : 140
   }
 
+  componentDidUpdate(prevProps: CoursePageProps) {
+    if (this.listRef.current && prevProps.playlistVideos !== this.props.playlistVideos) {
+      this.listRef.current.resetAfterIndex(0, true)
+    }
+  }
+
+  toggleOpen = (index: number) => {
+    if (this.listRef.current) {
+      this.listRef.current.resetAfterIndex(index, true)
+    }
+  }
+
   render() {
     const { title, loading, error, playlistVideos } = this.props
 
@@ -49,7 +61,7 @@ class CoursePage extends React.Component<CoursePageProps> {
                           index={index}
                           style={style}
                           video={playlistVideos[index]}
-                          toggleOpenCallback={() => this.listRef.current?.resetAfterIndex(index, true)}
+                          toggleOpenCallback={() => this.toggleOpen(index)}
                         />
                       )}
                     </List>
