@@ -1,11 +1,13 @@
 import CoursesListItem from "./CoursesListItem";
+import { Course } from "@/modules/shared/types";
+import CoursesListItemContainer from "./CoursesListItemContainer";
 
-const CoursesList: React.FC = () => {
+const CoursesList: React.FC<{ courses: Course[] }> = ({ courses }) => {
   return (
     <ul>
-      <CoursesListItem slug="java" />
-      <CoursesListItem slug="free-code-camp" />
-      <CoursesListItem slug="ten-days-of-javascript" />
+      {courses.map((course: Course) => (
+        <CoursesListItemContainer key={course.id} id={course.id} course={course} />
+      ))}
     </ul>
   );
 };

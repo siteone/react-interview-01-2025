@@ -1,6 +1,6 @@
 import { compose, lifecycle } from 'recompose'
 import { connect } from 'react-redux'
-import { fetchPlaylistRequest } from '../actions'
+import { fetchPlaylistRequest } from '../slice'
 
 const withFetchPlaylistRequest = connect(
   null,

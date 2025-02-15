@@ -1,12 +1,14 @@
 "use client";
-import { compose } from "recompose";
-
-import CoursePage from "./CoursePage";
-
+import CoursePage, { CoursePageProps } from "./CoursePage";
 import withPlaylistData from "./HOC/withPlaylistData";
 import fetchPlaylistOnMount from "./HOC/fetchPlaylistOnMount";
+import { compose } from "recompose";
 
-const CoursePageWithData = compose(
+interface ContainerProps {
+  playlistId: string;
+}
+
+const CoursePageWithData = compose<CoursePageProps, ContainerProps>(
   fetchPlaylistOnMount,
   withPlaylistData
 )(CoursePage);

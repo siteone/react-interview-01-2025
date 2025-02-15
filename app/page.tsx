@@ -1,9 +1,9 @@
-import CoursesPage from "@/modules/courses/CoursesPage";
+import CoursesPageContainer from "@/modules/courses/CoursesPageContainer";
 
 export default function Home() {
   return (
     <>
-      <CoursesPage />
+      <CoursesPageContainer />
     </>
   );
 }

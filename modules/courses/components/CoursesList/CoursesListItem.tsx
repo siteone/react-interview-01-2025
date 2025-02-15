@@ -1,14 +1,20 @@
+import { Course } from "@/modules/shared/types";
 import styles from "./CoursesListItem.module.scss";
 
-type Props = {
-  slug: string;
+export type CoursesListItemProps = {
+  course: Course;
+  onRemoveCourse: (id: string) => void;
 };
 
-const CoursesListItem: React.FC<Props> = ({ slug }) => {
+const CoursesListItem: React.FC<CoursesListItemProps> = ({ course, onRemoveCourse }) => {
+  const handleRemoveCourse = () => {
+    onRemoveCourse(course.id)
+  }
+
   return (
     <li className={styles["courses-list-item"]}>
-      {slug}
-      <button>remove course</button>
+      {course.title}
+      <button onClick={handleRemoveCourse}>remove course</button>
     </li>
   );
 };

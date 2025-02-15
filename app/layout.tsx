@@ -1,5 +1,5 @@
-import Layout from "@/components/Layout/Layout";
 import type { Metadata } from "next";
+import ClientLayout from './ClientLayout'
 
 export const metadata: Metadata = {
   title: "SiteOne interview app",
@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <Layout>{children}</Layout>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

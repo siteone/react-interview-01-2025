@@ -1,21 +1,35 @@
 import VideoFilter from './VideoFilter'
 import { connect } from 'react-redux'
 import { compose, withProps } from 'recompose'
-import { videoFilterSelector } from '../../selectors'
-import { setVideoFilter } from '../../actions'
+import { videoFilterSelector } from '../../selectors.js'
+import { setVideoFilter } from '../../slice'
+import { FilterValue } from '@/modules/shared/types'
+
+type FilterProps = {
+  filters: Array<{
+    onFilterSet: () => void;
+    name: string;
+    active: boolean;
+  }>;
+}
+
+type FilterContainerProps = {
+  videoFilter: string;
+  setVideoFilter: (value: { filterValue: FilterValue }) => void;
+}
 
 const withFilterState = connect(
   state => ({
     videoFilter: videoFilterSelector(state),
   }),
   dispatch => ({
-    setVideoFilter: filterValue => {
+    setVideoFilter: (filterValue: { filterValue: FilterValue }) => {
       dispatch(setVideoFilter(filterValue))
     },
   }),
 )
 
-const withFilters = withProps(({ setVideoFilter, videoFilter }) => {
+const withFilters = withProps<FilterProps, FilterContainerProps>(({ setVideoFilter, videoFilter }: FilterContainerProps) => {
   return {
     filters: [
       {
@@ -43,7 +57,7 @@ const withFilters = withProps(({ setVideoFilter, videoFilter }) => {
   }
 })
 
-export default  compose(
+export default compose<FilterProps, {}>(
   withFilterState,
   withFilters,
 )(VideoFilter)

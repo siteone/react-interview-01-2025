@@ -1,29 +1,27 @@
 import { configureStore } from '@reduxjs/toolkit'
-import playlistReducer from './slice'
-import createSagaMiddleware from "redux-saga";
-import { all } from "redux-saga/effects";
-
+import coursesReducer from './slice'
+import createSagaMiddleware from 'redux-saga'
+import { all } from 'redux-saga/effects'
 import saga from './saga'
 
 function* rootSaga() {
-  yield all([saga()]);
+  yield all([saga()])
 }
 
-const sagaMiddleware = createSagaMiddleware();
+const sagaMiddleware = createSagaMiddleware()
 
 export const makeStore = () => {
   const store = configureStore({
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(sagaMiddleware),
     reducer: {
-      coursePage: playlistReducer,
+      courses: coursesReducer,
     },
     devTools: true,
   })
-  sagaMiddleware.run(rootSaga);
+  sagaMiddleware.run(rootSaga)
   return store
 }
 
 export type AppStore = ReturnType<typeof makeStore>
-export type RootState = ReturnType<AppStore['getState']>
-export type AppDispatch = AppStore['dispatch']
+export type AppDispatch = AppStore['dispatch'] 
